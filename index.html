@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISA Hackathon Team 5</title>
+  </head>
+  <body>
+    <div>
+      <h1>April, Belal, Gareth, Winston</h1>
+    </div>
+
+    <div class="container">
+      <form method="post" id="searchForm">
+        <textarea
+          id="searchInput"
+          name="searchInput"
+          rows="5"
+          cols="40"
+          placeholder="Enter your search query..."
+          required
+        ></textarea>
+        <br />
+        <br />
+        <button id="analyzeButton" onclick="searchWord()">Analyze</button>
+        <br />
+        <br />
+        <div id="feedback"></div>
+        <div id="searchResult"></div> <!-- Added a searchResult div -->
+      </form>
+    </div>
+
+    <script>
+      function searchWord() {
+        const word = document.getElementById("searchInput").value; // Get the input value
+        const searchResult = document.getElementById("searchResult"); // Added searchResult element
+
+        // Check user input
+        if (!word) {
+          searchResult.textContent =
+            "There is no word, please check your input.";
+          searchResult.style.color = "red";
+          return;
+        }
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.open(
+          "GET",
+          `https://lab4server.onrender.com/api/definitions/?word=${word}`,
+          true
+        );
+
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4) {
+            // try {
+            //   const data = JSON.parse(this.responseText);
+            //   if (this.status == 200) {
+            //     searchResult.innerHTML = `${data.message}`;
+            //     searchResult.style.color = "green";
+            //   } else if (this.status == 404) {
+            //     searchResult.innerHTML = `${data.message}`;
+            //     searchResult.style.color = "orange";
+            //   }
+            // } catch (err) {
+            //   console.log(`Error when parsing JSON: ${err}`);
+            //   searchResult.textContent =
+            //     "Failed to search for the word and definition. Please try again.";
+            //   searchResult.style.color = "red";
+            // }
+          }
+        };
+
+        xhttp.send();
+      }
+    </script>
+  </body>
+</html>
